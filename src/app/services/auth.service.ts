@@ -22,6 +22,11 @@ export class AuthService {
       password: "12345",
       type: "administrator"
     });
+    this.users.push({
+      username: "victor",
+      password: "12345",
+      type: "administrator"
+    });
     
   }
 

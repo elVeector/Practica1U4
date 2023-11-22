@@ -12,6 +12,8 @@ import { AuthService } from '../services/auth.service';
 })
 export class Tab1Page {
 
+ 
+
   public products: Product[] = [];
   public productsFounds: Product[] = [];
   public filter = [
@@ -46,6 +48,8 @@ export class Tab1Page {
       this.productsFounds = this.products;
     });
 
+   
+    
   }
 
   public getColor(type: string): string {
@@ -71,14 +75,45 @@ export class Tab1Page {
     console.log(this.cartService.getCart());
   }
 
+
   openProductAddPage() {
     this.router.navigate(['/add-product']); // Asume que la ruta 'product-add' existe para añadir productos.
+  }
+
+  openProductUpdatePage(name:string) {
+    this.productService.pos = this.products.findIndex(item => item.name == name);
+    this.productService.productwhere = this.products[this.productService.pos];
+    this.productService.productCollection.snapshotChanges().subscribe((data) => {
+      this.productService.productwhere.id = data[this.productService.pos].payload.doc.id;
+    });
+    console.log(this.productService.productwhere);
+    
+    
+    this.router.navigate(['/update-product']);
+    
   }
 
   public logout() {
     this.authService.logout();
     this.router.navigate(['/login']);
   }
-  
+
+
+
+  deleteProduct(product: Product) {
+    console.log(this.productService.DeleteAndgetId(product));
+  }
+
+loadProductos(){
+  this.products = [
+    {
+    name:'Chile',
+    price: 5,
+    description: 'string',
+    type: 'string',
+    photo: 'string'
+  }
+  ]
+}
 
 }
